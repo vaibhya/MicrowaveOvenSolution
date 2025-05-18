@@ -23,20 +23,13 @@ namespace MicrowaveOven.API
             services.AddSwaggerGen();
 
             //Created a new extension method to add the microwave oven service
-            //This is hiding internal implementation details from the user of the library
+            //This is hiding internal implementation details from the user assuming MicroOven.Hardware is Nuget
             services.AddMicrowaveOven(_configuration, Heater.Microwave);
 
 
-            //services.AddSingleton<IMicrowaveOvenFactory, MicrowaveOvenFactory>();
             services.AddSingleton<ITimerService, TimerService>();
             services.AddSingleton<MicrowaveOvenEventHandler>();
-            services.AddSingleton<IMicrowaveOvenSimulator, MicrowaveOvenSimulator>();
-            //services.AddSingleton<IMicrowaveOvenHW>(provider =>
-            //{
-            //    var factory = provider.GetRequiredService<IMicrowaveOvenFactory>();
-            //    return factory.GetHeater(Heater.Microwave);
-            //});
-            
+            services.AddSingleton<IMicrowaveOvenSimulator, MicrowaveOvenSimulator>();            
             services.AddSingleton<IMicrowaveOvenEventHandler, MicrowaveOvenEventHandler>();
         }
 
