@@ -1,3 +1,5 @@
+using MicrowaveOven.Hardware.Service;
+
 namespace MicrowaveOven.Service
 {
     public interface IMicrowaveOvenSimulator : IMicrowaveOvenHW

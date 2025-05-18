@@ -1,11 +1,6 @@
-﻿using Microwave.Service;
-using MicrowaveOven.Service;
+﻿using MicrowaveOven.Hardware.Service;
 using MicrowaveOven.Service.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Moq;
 
 namespace MicrowaveOven.Test.Service
 {
@@ -13,13 +8,13 @@ namespace MicrowaveOven.Test.Service
     public class MicrowaveSimulatorTests
     {
         private MicrowaveOvenSimulator _microwaveSimulator;
-        private IMicrowaveOvenHW _hardware;
+        private Mock<IMicrowaveOvenHW> _mockHardware;
 
         [TestInitialize]
         public void Setup()
         {
-            _hardware = new MicrowaveSimulator();
-            _microwaveSimulator = new MicrowaveOvenSimulator(_hardware);
+            _mockHardware = new Mock<IMicrowaveOvenHW>();
+            _microwaveSimulator = new MicrowaveOvenSimulator(_mockHardware.Object);
         }
 
         [TestMethod]
@@ -118,6 +113,19 @@ namespace MicrowaveOven.Test.Service
 
             // Assert
             Assert.IsTrue(_microwaveSimulator.DoorOpen);
+        }
+
+        [TestMethod]
+        public void TurnOnHeater_WhenDoorIsClosed_CallsHardwareTurnOnHeater()
+        {
+            // Arrange
+            _microwaveSimulator.SetDoorOpen(false); // Ensure door is closed
+
+            // Act
+            _microwaveSimulator.TurnOnHeater();
+
+            // Assert
+            _mockHardware.Verify(hw => hw.TurnOnHeater(), Times.Once);
         }
 
     }

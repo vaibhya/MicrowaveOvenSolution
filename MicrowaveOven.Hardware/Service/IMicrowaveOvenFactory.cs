@@ -1,6 +1,6 @@
-﻿using MicrowaveOven.Enum;
+﻿using MicrowaveOven.Hardware.Enum;
 
-namespace MicrowaveOven.Service
+namespace MicrowaveOven.Hardware.Service
 {
     public interface IMicrowaveOvenFactory
     {

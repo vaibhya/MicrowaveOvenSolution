@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MicrowaveOven.DTO;
-using MicrowaveOven.Enum;
 using MicrowaveOven.Service;
 
 namespace MicrowaveOven.API.Controllers

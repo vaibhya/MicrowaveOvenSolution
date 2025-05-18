@@ -1,6 +1,6 @@
-﻿using MicrowaveOven.Service;
+﻿using MicrowaveOven.Hardware.Service;
 
-namespace MicrowaveOven.Oven.Service
+namespace MicrowaveOven.Hardware.Oven.Service.Impl
 {
     public class OvenSimulator : IMicrowaveOvenHW
     {

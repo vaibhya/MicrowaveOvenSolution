@@ -1,8 +1,8 @@
-﻿using Microwave.Service;
-using MicrowaveOven.Enum;
-using MicrowaveOven.Oven.Service;
+﻿using MicrowaveOven.Hardware.Enum;
+using MicrowaveOven.Hardware.Microwave.Service.Impl;
+using MicrowaveOven.Hardware.Oven.Service.Impl;
 
-namespace MicrowaveOven.Service.Impl
+namespace MicrowaveOven.Hardware.Service.Impl
 {
     public class MicrowaveOvenFactory : IMicrowaveOvenFactory
     {

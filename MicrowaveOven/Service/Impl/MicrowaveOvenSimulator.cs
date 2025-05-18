@@ -1,4 +1,7 @@
-﻿namespace MicrowaveOven.Service.Impl
+﻿
+using MicrowaveOven.Hardware.Service;
+
+namespace MicrowaveOven.Service.Impl
 {
     public class MicrowaveOvenSimulator : IMicrowaveOvenSimulator
     {
@@ -44,6 +47,7 @@
             else
             {
                 _isHeaterStart = isStart;
+                StartButtonPressed?.Invoke(this, EventArgs.Empty);
                 Console.WriteLine("Start button not pressed");
             }
         }

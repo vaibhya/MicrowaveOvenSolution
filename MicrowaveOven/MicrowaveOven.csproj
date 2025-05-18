@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicrowaveOven.Hardware\MicrowaveOven.Hardware.csproj" />
+  </ItemGroup>
+
 </Project>

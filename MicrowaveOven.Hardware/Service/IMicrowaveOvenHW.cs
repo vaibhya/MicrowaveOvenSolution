@@ -1,4 +1,4 @@
-﻿namespace MicrowaveOven.Service
+﻿namespace MicrowaveOven.Hardware.Service
 {
     public interface IMicrowaveOvenHW
     {
