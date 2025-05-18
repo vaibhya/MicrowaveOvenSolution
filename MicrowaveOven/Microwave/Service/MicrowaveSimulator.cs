@@ -2,11 +2,11 @@
 
 namespace Microwave.Service
 {
-    public class MicrowaveSimulator : IMicrowaveOvenHW,IMicrowaveOvenSimulator
+    public class MicrowaveSimulator : IMicrowaveOvenHW
     {
         public event Action<bool> DoorOpenChanged;
         public event EventHandler StartButtonPressed;
-        
+
         private bool _doorOpen;
         private bool _isHeaterStart;
 
@@ -17,13 +17,6 @@ namespace Microwave.Service
             {
                 _doorOpen = value;
             }
-        }
-
-        public bool StartButtonValue { 
-            get { return _isHeaterStart; }
-            set {
-                _isHeaterStart = value;
-            } 
         }
 
         public void TurnOffHeater()
@@ -37,28 +30,6 @@ namespace Microwave.Service
             Console.WriteLine("Microwave turnOn");
 
         }
-
-        public void SetDoorOpen(bool isOpen)
-        {
-            _doorOpen = isOpen;
-            DoorOpenChanged?.Invoke(_doorOpen);
-        }
-
-        public void SimulateStartButtonPress(bool isStart)
-        {
-            if (isStart)
-            {
-                _isHeaterStart = isStart;
-                StartButtonPressed?.Invoke(this, EventArgs.Empty);
-                Console.WriteLine("Start button pressed");
-            }
-            else
-            {
-                _isHeaterStart = isStart;
-                Console.WriteLine("Start button not pressed");
-            }
-        }
-
 
     }
 }

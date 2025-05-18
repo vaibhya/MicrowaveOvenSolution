@@ -15,7 +15,7 @@
         /// <summary>
         /// Indicates if the door to the Microware oven is open or closed
         /// </summary>
-        bool DoorOpen { get; }
+        bool DoorOpen { get; set; }
 
         /// <summary>
         /// Signal if the Door is opened or closed

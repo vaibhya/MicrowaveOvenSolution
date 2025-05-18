@@ -8,7 +8,7 @@ namespace MicrowaveOven.Service.Impl
 
         private HeaterResponse _heaterResponse;
         private ITimerService _timer;
-        private readonly IMicrowaveOvenFactory _factory;
+        
 
         public MicrowaveOvenEventHandler(ITimerService timerService, IMicrowaveOvenSimulator microwaveOvenSimulator)
         {

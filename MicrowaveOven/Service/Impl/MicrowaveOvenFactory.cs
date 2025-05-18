@@ -6,7 +6,7 @@ namespace MicrowaveOven.Service.Impl
 {
     public class MicrowaveOvenFactory : IMicrowaveOvenFactory
     {
-        public IMicrowaveOvenSimulator GetHeater(Heater heater)
+        public IMicrowaveOvenHW GetHeater(Heater heater)
         {
             switch (heater)
             {

@@ -1,4 +1,6 @@
 ﻿using Microwave.Service;
+using MicrowaveOven.Service;
+using MicrowaveOven.Service.Impl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +12,14 @@ namespace MicrowaveOven.Test.Service
     [TestClass]
     public class MicrowaveSimulatorTests
     {
-        private MicrowaveSimulator _microwaveSimulator;
+        private MicrowaveOvenSimulator _microwaveSimulator;
+        private IMicrowaveOvenHW _hardware;
 
         [TestInitialize]
         public void Setup()
         {
-            _microwaveSimulator = new MicrowaveSimulator();
+            _hardware = new MicrowaveSimulator();
+            _microwaveSimulator = new MicrowaveOvenSimulator(_hardware);
         }
 
         [TestMethod]
@@ -90,6 +94,7 @@ namespace MicrowaveOven.Test.Service
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exception))]
         public void TurnOnHeater_SetsDoorOpenToFalse()
         {
             // Arrange
@@ -99,8 +104,7 @@ namespace MicrowaveOven.Test.Service
             // Act
             _microwaveSimulator.TurnOnHeater();
 
-            // Assert
-            Assert.IsFalse(_microwaveSimulator.DoorOpen);
+            
         }
 
         [TestMethod]

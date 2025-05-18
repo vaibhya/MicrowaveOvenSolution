@@ -4,6 +4,6 @@ namespace MicrowaveOven.Service
 {
     public interface IMicrowaveOvenFactory
     {
-        public IMicrowaveOvenSimulator GetHeater(Heater heater);
+        public IMicrowaveOvenHW GetHeater(Heater heater);
     }
 }

@@ -24,7 +24,8 @@ namespace MicrowaveOven.API
             services.AddSingleton<IMicrowaveOvenFactory, MicrowaveOvenFactory>();
             services.AddSingleton<ITimerService, TimerService>();
             services.AddSingleton<MicrowaveOvenEventHandler>();
-            services.AddSingleton<IMicrowaveOvenSimulator>(provider =>
+            services.AddSingleton<IMicrowaveOvenSimulator, MicrowaveOvenSimulator>();
+            services.AddSingleton<IMicrowaveOvenHW>(provider =>
             {
                 var factory = provider.GetRequiredService<IMicrowaveOvenFactory>();
                 return factory.GetHeater(Heater.Microwave);
