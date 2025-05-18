@@ -48,10 +48,13 @@ namespace Microwave.Service
         {
             if (isStart)
             {
+                _isHeaterStart = isStart;
                 StartButtonPressed?.Invoke(this, EventArgs.Empty);
+                Console.WriteLine("Start button pressed");
             }
             else
             {
+                _isHeaterStart = isStart;
                 Console.WriteLine("Start button not pressed");
             }
         }

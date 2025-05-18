@@ -5,39 +5,53 @@ namespace MicrowaveOven.Service.Impl
     public class MicrowaveOvenEventHandler : IMicrowaveOvenEventHandler
     {
         private readonly IMicrowaveOvenSimulator _microwaveOvenSimulator;
-        private bool _isHeating;
+
         private HeaterResponse _heaterResponse;
         private ITimerService _timer;
         private readonly IMicrowaveOvenFactory _factory;
 
         public MicrowaveOvenEventHandler(ITimerService timerService, IMicrowaveOvenSimulator microwaveOvenSimulator)
         {
-            //_microwaveOvenSimulator = _factory.GetHeater(Heater.Microwave);
             _microwaveOvenSimulator = microwaveOvenSimulator;
             _timer = timerService;
-            //microwave is hardcoded this will be configurable in the future
 
-            // Subscribe to the Action<bool> event signature as provided by the client
+            // Subscribe to events published by Microwave/oven
             _microwaveOvenSimulator.DoorOpenChanged += OnDoorOpenChanged;
             _microwaveOvenSimulator.StartButtonPressed += OnStartButtonPressed;
             _timer.IsTimeOver += OnTimeUp;
+
             _heaterResponse = new HeaterResponse();
         }
 
+        /// <summary>
+        /// Handles the event when the timer expires.
+        /// </summary>
+        /// <remarks>This method stops the heating process by turning off the heater and updating the
+        /// internal state.</remarks>
+        /// <param name="isTimeUp">A value indicating whether the timer has reached its end.  This parameter is expected to be <see
+        /// langword="true"/> when the timer expires.</param>
         private void OnTimeUp(bool isTimeUp)
         {
             _microwaveOvenSimulator.TurnOffHeater();
-            _isHeating = false;
+            
             _heaterResponse.IsHeaterOn = false;
         }
 
+        /// <summary>
+        /// Handles the state change of the microwave oven door.
+        /// </summary>
+        /// <remarks>When the door is opened, the microwave stops heating, the timer is paused, and the
+        /// internal state is updated  to reflect that the door is open. When the door is closed, the microwave is set
+        /// to a ready state.</remarks>
+        /// <param name="isOpen">A boolean value indicating whether the door is open.  <see langword="true"/> if the door is open; otherwise,
+        /// <see langword="false"/>.</param>
         private void OnDoorOpenChanged(bool isOpen)
         {
 
             if (isOpen)
             {
                 _microwaveOvenSimulator.TurnOffHeater();
-                _isHeating = false;
+                
                 _heaterResponse.IsLightOn = true;
                 _heaterResponse.IsHeaterOn = false;
                 _heaterResponse.IsDoorOpen = true;
@@ -48,17 +62,22 @@ namespace MicrowaveOven.Service.Impl
             }
             else
             {
-                
                 _heaterResponse.IsLightOn = false;
                 _heaterResponse.IsHeaterOn = false;
                 _heaterResponse.IsDoorOpen = false;
-                
-                
-                //add logic if time is there is door false add seperate message
                 Console.WriteLine("Door is closed, microwave is ready to use.");
             }
         }
 
+        /// <summary>
+        /// Handles the event triggered when the start button of the microwave is pressed.
+        /// </summary>
+        /// <remarks>This method checks the state of the microwave door and the current heating status to
+        /// determine  whether to start or stop the microwave. If the door is open, the microwave cannot be started.  If
+        /// the microwave is already running, pressing the start button will stop it. Otherwise, pressing  the start
+        /// button will start the microwave and add 60 seconds to the timer.</remarks>
+        /// <param name="sender">The source of the event, typically the start button.</param>
+        /// <param name="e">The event data associated with the button press.</param>
         private void OnStartButtonPressed(object sender, EventArgs e)
         {
 
@@ -69,9 +88,18 @@ namespace MicrowaveOven.Service.Impl
             }
             if (_microwaveOvenSimulator.StartButtonValue)
             {
+                _microwaveOvenSimulator.TurnOnHeater();
+                _timer.AddTime(60); // Add 60 seconds to the timer
+                _heaterResponse.TimeLeft = _timer.GetTime();
+                _heaterResponse.IsHeaterOn = true;
+                _heaterResponse.IsLightOn = false;
+                _heaterResponse.IsDoorOpen = false;
+                
+                Console.WriteLine("Microwave is turned on.");
+            }
+            else
+            {
                 _microwaveOvenSimulator.TurnOffHeater();
-                _isHeating = false;
-
                 _heaterResponse.IsHeaterOn = false;
                 _heaterResponse.IsLightOn = false;
                 _heaterResponse.IsDoorOpen = false;
@@ -79,20 +107,6 @@ namespace MicrowaveOven.Service.Impl
                 _heaterResponse.TimeLeft = _timer.GetTime();
 
                 Console.WriteLine("Microwave is turned off.");
-            }
-
-            else
-            {
-                _microwaveOvenSimulator.TurnOnHeater();
-                //_timer.Start();
-                _timer.AddTime(60); // Add 60 seconds to the timer
-                _heaterResponse.TimeLeft = _timer.GetTime();
-                _heaterResponse.IsHeaterOn = true;
-                _heaterResponse.IsLightOn = false;
-                _heaterResponse.IsDoorOpen = false;
-
-                _isHeating = true;
-                Console.WriteLine("Microwave is turned on.");
             }
         }
 

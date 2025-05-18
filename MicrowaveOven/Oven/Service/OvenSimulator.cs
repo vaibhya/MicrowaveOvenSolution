@@ -1,9 +1,4 @@
 ﻿using MicrowaveOven.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MicrowaveOven.Oven.Service
 {
@@ -12,6 +7,7 @@ namespace MicrowaveOven.Oven.Service
         public event Action<bool> DoorOpenChanged;
         public event EventHandler StartButtonPressed;
         private bool _doorOpen;
+        private bool _isHeaterStart;
 
         public bool DoorOpen
         {
@@ -22,8 +18,14 @@ namespace MicrowaveOven.Oven.Service
             }
         }
 
-        public bool StartButtonValue { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        public bool StartButtonValue
+        {
+            get { return _isHeaterStart; }
+            set
+            {
+                _isHeaterStart = value;
+            }
+        }
         public void TurnOffHeater()
         {
             Console.WriteLine("Oven turnOff");
@@ -43,7 +45,17 @@ namespace MicrowaveOven.Oven.Service
 
         public void SimulateStartButtonPress(bool isStart)
         {
-            StartButtonPressed?.Invoke(this, EventArgs.Empty);
+            if (isStart)
+            {
+                _isHeaterStart = isStart;
+                StartButtonPressed?.Invoke(this, EventArgs.Empty);
+                Console.WriteLine("Start button pressed");
+            }
+            else
+            {
+                _isHeaterStart = isStart;
+                Console.WriteLine("Start button not pressed");
+            }
         }
     }
 }
