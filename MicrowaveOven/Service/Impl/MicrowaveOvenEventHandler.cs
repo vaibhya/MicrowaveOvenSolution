@@ -8,7 +8,7 @@ namespace MicrowaveOven.Service.Impl
 
         private HeaterResponse _heaterResponse;
         private ITimerService _timer;
-        
+
 
         public MicrowaveOvenEventHandler(ITimerService timerService, IMicrowaveOvenSimulator microwaveOvenSimulator)
         {
@@ -33,7 +33,7 @@ namespace MicrowaveOven.Service.Impl
         private void OnTimeUp(bool isTimeUp)
         {
             _microwaveOvenSimulator.TurnOffHeater();
-            
+
             _heaterResponse.IsHeaterOn = false;
         }
 
@@ -51,7 +51,7 @@ namespace MicrowaveOven.Service.Impl
             if (isOpen)
             {
                 _microwaveOvenSimulator.TurnOffHeater();
-                
+
                 _heaterResponse.IsLightOn = true;
                 _heaterResponse.IsHeaterOn = false;
                 _heaterResponse.IsDoorOpen = true;
@@ -94,8 +94,8 @@ namespace MicrowaveOven.Service.Impl
                 _heaterResponse.IsHeaterOn = true;
                 _heaterResponse.IsLightOn = false;
                 _heaterResponse.IsDoorOpen = false;
-                
-                Console.WriteLine("Microwave is turned on.");
+
+
             }
             else
             {
@@ -106,7 +106,7 @@ namespace MicrowaveOven.Service.Impl
                 _timer.Stop();
                 _heaterResponse.TimeLeft = _timer.GetTime();
 
-                Console.WriteLine("Microwave is turned off.");
+
             }
         }
 

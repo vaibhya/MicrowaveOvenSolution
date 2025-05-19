@@ -2,7 +2,7 @@
 
 namespace MicrowaveOven.Hardware.Oven.Service.Impl
 {
-    public class OvenSimulator : IMicrowaveOvenHW
+    internal class OvenSimulator : IMicrowaveOvenHW
     {
         public event Action<bool> DoorOpenChanged;
         public event EventHandler StartButtonPressed;

@@ -70,7 +70,7 @@ namespace MicrowaveOven.Test.Service
         }
 
         [TestMethod]
-        public void SimulateStartButtonPress_False_SetsStartButtonValueAndDoesNotRaiseEvent()
+        public void SimulateStartButtonPress_False_SetsStartButtonValueAndRaiseEventForStopButton()
         {
             // Arrange
             bool eventRaised = false;
@@ -85,7 +85,7 @@ namespace MicrowaveOven.Test.Service
 
             // Assert
             Assert.IsFalse(_microwaveSimulator.StartButtonValue);
-            Assert.IsFalse(eventRaised, "StartButtonPressed event should not be raised for false.");
+            Assert.IsTrue(eventRaised, "StartButtonPressed event should be raised for stop button.");
         }
 
         [TestMethod]

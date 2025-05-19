@@ -48,7 +48,7 @@ namespace MicrowaveOven.Service.Impl
             {
                 _isHeaterStart = isStart;
                 StartButtonPressed?.Invoke(this, EventArgs.Empty);
-                Console.WriteLine("Start button not pressed");
+                Console.WriteLine("Stop button pressed");
             }
         }
 
